@@ -271,8 +271,11 @@ void DomParser::parseMetaTeds(const QDomElement &element)
 
         child = child .nextSibling();
     }
-    char * str = (char *) malloc(sizeof(Meta_TEDS));
+    char * str = (char *) malloc(sizeof(Meta_TEDS) + 2);
     char * s = str;
+    *s = (char)0X5A;
+    s ++;
+
     char * m = (char *) meta;
     cout << "size meta: " << sizeof(Meta_TEDS) << endl;
     for(int i = 0; i < sizeof(Meta_TEDS); i ++)
@@ -283,7 +286,19 @@ void DomParser::parseMetaTeds(const QDomElement &element)
         s ++;
         m ++;
     }
+    *s = (char) 0XA5;
     cout << "str = " << *str << endl;
+    for (int i = 0; i < sizeof(Meta_TEDS) + 2; i ++)
+    {
+        cout << (int)str[i] << " ";
+    }
+    cout << endl;
+    QString strTemp = "";
+    for (int i = 0; i < sizeof(Meta_TEDS) + 2; i ++)
+    {
+        strTemp += str[i];
+    }
+    strMeta = strTemp;
 }
 
 void DomParser::parsePhyTeds(const QDomElement &element)
@@ -348,8 +363,10 @@ void DomParser::parsePhyTeds(const QDomElement &element)
 
         child = child .nextSibling();
     }
-    char * str = (char *) malloc(sizeof(Phy_TEDS));
+    char * str = (char *) malloc(sizeof(Phy_TEDS) + 2);
     char * s = str;
+    *s = (char)0X5A;
+    s ++;
     char * m = (char *) phy;
     cout << "size phy: " << sizeof(Phy_TEDS) << endl;
     for(int i = 0; i < sizeof(Phy_TEDS); i ++)
@@ -360,7 +377,21 @@ void DomParser::parsePhyTeds(const QDomElement &element)
         s ++;
         m ++;
     }
+    *s = (char)0XA5;
     cout << "str = " << *str << endl;
+    char * ss = str;
+    for (int i = 0; i < sizeof(Phy_TEDS) + 2; i ++)
+    {
+        cout << (int)str[i] << " ";
+    }
+    cout << endl;
+    QString strTemp = "";
+    for (int i = 0; i < sizeof(Phy_TEDS) + 2; i ++)
+    {
+        strTemp += str[i];
+    }
+    strPhy = strTemp;
+
 }
 
 
@@ -608,6 +639,8 @@ void DomParser::parseTransducerTeds(const QDomElement &element)
     }
     char * str = (char *) malloc(sizeof(Transducerchannel_TEDS));
     char * s = str;
+    *s = (char)0X5A;
+    s ++;
     char * m = (char *) ts;
     cout << "size tansducer: " << sizeof(Transducerchannel_TEDS) << endl;
     for(int i = 0; i < sizeof(Transducerchannel_TEDS); i ++)
@@ -618,7 +651,25 @@ void DomParser::parseTransducerTeds(const QDomElement &element)
         s ++;
         m ++;
     }
+    *s = (char)0XA5;
     cout << "str = " << *str << endl;
+
+    for (int i = 0; i < sizeof(Transducerchannel_TEDS) + 2; i ++)
+    {
+        cout << (int)str[i] << " ";
+    }
+    cout << endl;
+
+    QString strTemp = "";
+    for (int i = 0; i < sizeof(Transducerchannel_TEDS) + 2; i ++)
+    {
+        strTemp += str[i];
+    }
+    strTs = strTemp;
+ /*   for (int i = 0; i < sizeof(Transducerchannel_TEDS) + 2; i ++)
+        cout << (int)strTemp.toLatin1().constData()[i] << ", ";
+    cout << endl;
+ */
 }
 
 

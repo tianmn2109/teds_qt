@@ -37,6 +37,9 @@ public slots:
     void read_port();
     void serial_error_handler(QSerialPort::SerialPortError serial_error);
     void buttonWriteData();
+    void buttonWritePhy();
+    void buttonWriteTs();
+    void buttonWriteTeds();
 
 };
 

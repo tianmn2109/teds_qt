@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(m_serial_port, SIGNAL(readyRead()), this, SLOT(read_port()));
     connect(m_serial_port, SIGNAL(error(QSerialPort::SerialPortError)), this, SLOT(serial_error_handler(QSerialPort::SerialPortError)));
 
-    m_serial_port->setPortName("COM2");
+    m_serial_port->setPortName("COM1");
     m_serial_port->setBaudRate(115200);
     m_serial_port->setDataBits(QSerialPort::Data8);
     m_serial_port->setParity(QSerialPort::NoParity);
@@ -130,10 +130,55 @@ qint64 MainWindow::write_port(QByteArray &byte_arr)
 }
 void MainWindow::buttonWriteData()
 {
+
     ui->textSended->appendPlainText("\n\nwrite data:\n");
-    QString strWrite = "data for test";
-    QByteArray byte_arr(strWrite.toLatin1());
-    ui->textSended->appendPlainText(QString(byte_arr));
+    QByteArray byte_arr = testDomParser->strMeta.toLatin1();
+    //for (int i = 0; i< byte_arr.size(); i ++)
+     //   ui->textSended->appendPlainText(QString::number((int)byte_arr.at(i)));
+    int ret = write_port(byte_arr);
+    ui->textSended->appendPlainText("write " + QString::number(ret) + "\n");
+
+   /* for (int i = 0 ; i < b.size(); i ++)
+        cout << (int)b.at(i) << "-" ;
+    cout << endl;
+   */
+}
+
+void MainWindow::buttonWritePhy()
+{
+    ui->textSended->appendPlainText("\n\nwrite data:\n");
+    QByteArray byte_arr = testDomParser->strPhy.toLatin1();
+    for (int i = 0; i< byte_arr.size(); i ++)
+        ui->textSended->appendPlainText(QString::number((int)byte_arr.at(i)));
+    int ret = write_port(byte_arr);
+    ui->textSended->appendPlainText("write " + QString::number(ret) + "\n");
+}
+
+void MainWindow::buttonWriteTs()
+{
+    ui->textSended->appendPlainText("\n\nwrite data:\n");
+    QByteArray byte_arr = testDomParser->strTs.toLatin1();
+    for (int i = 0; i< byte_arr.size(); i ++)
+        ui->textSended->appendPlainText(QString::number((int)byte_arr.at(i)));
+
+    int ret = write_port(byte_arr);
+    ui->textSended->appendPlainText("write " + QString::number(ret) + "\n");
+}
+
+void MainWindow::buttonWriteTeds()
+{
+    QString str = "";
+    for (int i = 0; i < testDomParser->strPhy.size() - 1; i ++)
+           str += testDomParser->strPhy[i];
+    for (int i = 1; i < testDomParser->strMeta.size() - 1; i ++)
+            str += testDomParser->strMeta[i];
+    for (int i = 1; i < testDomParser->strTs.size(); i ++)
+            str += testDomParser->strTs[i];
+    ui->textSended->appendPlainText("\n\nwrite data:\n");
+    QByteArray byte_arr = str.toLatin1();
+    for (int i = 0; i< byte_arr.size(); i ++)
+        ui->textSended->appendPlainText(QString::number((int)byte_arr.at(i)));
+
     int ret = write_port(byte_arr);
     ui->textSended->appendPlainText("write " + QString::number(ret) + "\n");
 }

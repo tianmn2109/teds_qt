@@ -12,6 +12,10 @@ public:
     bool readPhyTedsFile(const QString & filename);
     bool readTransducerTedsFile(const QString & filename);
 
+    QString strPhy;
+    QString strMeta;
+    QString strTs;
+
 private:
     void parseMetaTeds(const QDomElement & element);
     void parsePhyTeds(const QDomElement & element);
@@ -21,6 +25,7 @@ private:
     QDomDocument doc;
     Meta_TEDS * meta;
     Phy_TEDS * phy;
+
     Transducerchannel_TEDS * ts;
 };
 
